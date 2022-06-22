@@ -10,7 +10,7 @@ var Clock = {
             document.getElementById("pausebtn").style.display="";
             document.getElementById("minutes").innerHTML = pad(Math.floor(self.totalSeconds / 60 % 60));
             document.getElementById("seconds").innerHTML = pad(parseInt(self.totalSeconds % 60));
-            document.title = pad(Math.floor(self.totalSeconds / 60 % 60)) + ':' + pad(parseInt(self.totalSeconds % 60)) + ' | Timer';
+            document.title = pad(Math.floor(self.totalSeconds / 60 % 60)) + ':' + pad(parseInt(self.totalSeconds % 60)) + ' | 30 Days Timer';
           }, 1000);
       }
     },
@@ -21,7 +21,7 @@ var Clock = {
       document.getElementById("pausebtn").style.display="none";
       document.getElementById("minutes").innerHTML = "00";
       document.getElementById("seconds").innerHTML = "00";
-      document.title = "Timer"
+      document.title = "30 Days Timer"
       delete this.interval;
     },
     pauseTimer: function () {
