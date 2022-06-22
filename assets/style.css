@@ -61,11 +61,6 @@ body {
   user-select: none;
 }
 
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
-}
 .timer{
   font-size: 9rem;
   letter-spacing: -0.25rem;
@@ -89,4 +84,10 @@ body {
   font-size: 3rem;
   vertical-align: middle;
   text-align: center;
+}
+
+@media only screen and (max-width: 600px){
+  .timer{
+    font-size: 6rem;
+  }
 }

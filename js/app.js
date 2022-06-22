@@ -1,5 +1,7 @@
 var Clock = {
     totalSeconds: 0,
+
+    // Start Timer
     startTimer: function () {
       if (!this.interval) {
           var self = this;
@@ -14,6 +16,8 @@ var Clock = {
           }, 1000);
       }
     },
+
+    // Reset Timer
     resetTimer: function () {
       Clock.totalSeconds = null; 
       clearInterval(this.interval);
@@ -24,19 +28,24 @@ var Clock = {
       document.title = "30 Days Timer"
       delete this.interval;
     },
+
+    // Pause Timer
     pauseTimer: function () {
       document.getElementById("startbtn").style.display="";
       document.getElementById("pausebtn").style.display="none";
       clearInterval(this.interval);
       delete this.interval;
     },
+
+    // Resume Timer
     resumeTimer: function () {
       this.startTimer();
     },
 };
   
+// Background Image Changer
 $(document).ready(function(){
-    var totalCount = 10;
+    var totalCount = 20;
     var num = Math.floor(Math.random() * totalCount) + 1;
     document.body.background = 'assets/img/bg'+num+'.jpg';
     document.body.style.backgroundSize = "cover";
