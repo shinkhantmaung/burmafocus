@@ -132,10 +132,11 @@ main {
     min-width: 120px;
 }
 
-/* .control-btn:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    border-color: rgba(255, 255, 255, 0.8);
-} */
+.control-btn:hover {
+    background-color: #262626;
+    color: #fff;
+    border-color: #262626; /* Keep border white on hover */
+}
 
 .btn-restart {
     font-size: 1.5rem;
