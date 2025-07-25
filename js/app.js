@@ -39,7 +39,7 @@ var Clock = {
                 
                 document.getElementById("minutes").innerHTML = pad(currentMinutes);
                 document.getElementById("seconds").innerHTML = pad(currentSeconds);
-                document.title = pad(currentMinutes) + ':' + pad(currentSeconds) + ' | 60mins Timer';
+                document.title = pad(currentMinutes) + ':' + pad(currentSeconds) + ' | Pomodoro Timer';
 
                 if (self.totalSeconds <= 0) {
                     self.handleSessionEnd();
@@ -179,7 +179,23 @@ const backgroundImages = [
     "assets/img/bg1.jpg",
     "assets/img/bg2.jpg",
     "assets/img/bg3.jpg",
-    "assets/img/bg4.jpg" 
+    "assets/img/bg4.jpg",
+    "assets/img/bg5.jpg",
+    "assets/img/bg6.jpg",
+    "assets/img/bg7.jpg",
+    "assets/img/bg8.jpg",
+    "assets/img/bg9.jpg",
+    "assets/img/bg10.jpg",
+    "assets/img/bg11.jpg",
+    "assets/img/bg12.jpg",
+    "assets/img/bg13.jpg",
+    "assets/img/bg14.jpg",
+    "assets/img/bg15.jpg",
+    "assets/img/bg16.jpg",
+    "assets/img/bg17.jpg",
+    "assets/img/bg18.jpg",
+    "assets/img/bg19.jpg",
+    "assets/img/bg20.jpg"
     // Add more image paths here as needed
 ];
 
