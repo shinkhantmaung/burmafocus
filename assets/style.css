@@ -1,99 +1,72 @@
-/* Existing Custom styles for this template */
+/* General Body and Layout */
+html, body {
+    height: 100%;
+}
+
 body {
+    background-color: #262626; /* Dark background */
     font-family: 'Space Grotesk', sans-serif;
-    background-color: #262626; /* Darker, warm gray background */
-    color: #f0f0f0; /* Light, slightly warm text color */
-    overflow: hidden; /* Prevent scrolling */
-    margin: 0;
-    padding: 0;
+    position: relative;
+    overflow: hidden; /* Prevent scroll bars if background is larger */
 }
 
-/* Cover container for your main content */
-.cover-container {
-    max-width: 60em;
-    z-index: 1; /* Ensure UI is above background */
-    position: relative; /* For proper z-indexing */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ensure cover container takes full viewport height */
-}
-
-/* Timer and button styles (keep yours) */
-.timer {
-    font-size: 8rem;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.btn-lg {
-    padding: .75rem 1.5rem;
-    font-size: 1.25rem;
-}
-
-.btn-rounded {
-    border-radius: 2rem;
-}
-
-.btn-restart {
-    font-size: 2.5rem; /* Larger icons */
-    margin-left: 15px;
-    vertical-align: middle;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.btn-restart:hover {
-    transform: scale(1.1);
-}
-
-/* --- New Lofi Styles (Adapted from reference) --- */
-
+/* Background Image Container */
 #background-container {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: -1; /* Send background elements to back */
-    transition: opacity 0.5s ease-in-out;
+    z-index: -1; /* Place behind other content */
+    filter: brightness(0.7) blur(3px); /* Darken and blur the background image */
+    transition: filter 0.5s ease-in-out; /* Smooth transition for filter changes */
 }
 
 #background-container.hidden {
-    opacity: 0;
-    pointer-events: none; /* Disable interactions when hidden */
+    filter: brightness(0) blur(10px); /* Hide effect */
 }
 
 #background-image {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover; /* Cover the entire screen */
-    filter: brightness(0.5) blur(0.5px); /* Dim and blur for lofi effect */
-    transform: scale(1.1); /* Slightly scale to hide blur edges */
-    transition: filter 0.5s ease-in-out; /* Smooth transition for blur/brightness */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the entire container */
+    object-position: center;
+    transition: opacity 0.5s ease-in-out; /* Smooth transition for image changes */
 }
 
-/* Hidden YouTube player for audio only */
+/* YouTube Player (hidden in background) */
 #player {
-    position: absolute; /* Position it off-screen */
-    left: -9999px;
-    top: -9999px;
-    width: 1px;
-    height: 1px;
-    opacity: 0; /* Make it completely invisible */
-    pointer-events: none; /* Ensure it doesn't interfere with mouse events */
+    position: absolute;
+    top: -100px; /* Hide off-screen */
+    left: 0;
+    width: 100%;
+    height: calc(100% + 200px); /* Make it larger to fill space */
+    pointer-events: none; /* Make it unclickable */
+    z-index: -2; /* Ensure it's behind the image and container */
 }
 
-/* Main content area within cover-container */
-main.px-3 {
-    flex-grow: 1; /* Allow main to take up available vertical space */
+/* Cover Container for Main Content */
+.cover-container {
+    max-width: 60em; /* Max width for central content */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center timer and main controls horizontally */
-    justify-content: center; /* Vertically center timer and main controls */
+    justify-content: space-between; /* Push nav to top, footer to bottom */
+    height: 100%;
+    z-index: 1; /* Place above background */
+    position: relative;
 }
-/* ... (existing body, cover-container, timer styles etc.) ... */
+
+/* Main Content Area */
+main {
+    flex-grow: 1; /* Allow main content to expand */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 
 /* --- Pomodoro Mode Buttons --- */
 .pomodoro-modes {
@@ -107,7 +80,7 @@ main.px-3 {
 .pomodoro-btn {
     padding: 0.6rem 1.2rem;
     font-size: 1rem;
-    border-radius: 2rem;
+    border-radius: 2rem; /* Keep rounded corners */
     /* Default style for non-active buttons (outline effect) */
     background-color: transparent; /* Transparent background */
     color: #f0f0f0; /* Light text color */
@@ -131,166 +104,219 @@ main.px-3 {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Optional: subtle glow */
 }
 
-/* ... (rest of your CSS, like lofi, bottom-controls, media queries) ... */
+/* Timer Display */
+.timer {
+    font-size: 8rem; /* Large font size for timer */
+    line-height: 1;
+    margin-bottom: 30px;
+    font-weight: bold;}
 
-/* Volume slider styling (adjusted for your app's look) */
-.lofi-volume-slider {
-    -webkit-appearance: none;
-    width: 120px; /* Slightly smaller width */
-    height: 8px;
-    background: rgba(255, 255, 255, 0.2); /* Transparent track */
-    border-radius: 5px;
-    outline: none;
-    transition: opacity .2s;
-    vertical-align: middle; /* Align with icons */
+/* Control Buttons (Start/Stop/Reset) - NEW styles for start/pause */
+#control {
+    display: flex; /* Use flexbox for horizontal alignment */
+    align-items: center; /* Vertically align items in the middle */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 10px; /* Space between buttons */
 }
 
-.lofi-volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #f7fafc; /* White thumb */
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.lofi-volume-slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #f7fafc;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* --- Background Toggle Button --- */
-.background-toggle-container {
-    margin-top: 30px; /* Space below timer controls */
-    display: inline-block; /* To allow button to sit inline */
-}
-
-/* Re-using existing button styles */
-.background-toggle-container .btn {
+.control-btn { /* NEW class for start/pause buttons */
     padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    border-radius: 2rem;
+    font-size: 1.1rem; /* Slightly larger font */
+    border-radius: 2rem; /* Make them rounded too */
+    background-color: #fff; /* White background */
+    color: #262626; /* Dark text */
+    border: 1px solid #fff; /* White border */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    font-weight: bold;
+    min-width: 120px;
 }
 
+/* .control-btn:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
+} */
 
-/* --- Bottom Controls Layout --- */
-
-.bottom-controls {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between; /* Lofi Info on left, Controls + Fullscreen on right */
-    align-items: flex-end; /* Align groups to the bottom */
-    padding: 20px;
-    color: white; /* Ensure text is visible on background */
-    pointer-events: auto; /* Ensure controls are clickable */
-    z-index: 2; /* Make sure they are above the background and possibly timer for interaction */
-}
-
-/* Lofi info (title, credit) at bottom-left */
-#lofi-info-bottom {
-    background-color: rgba(0, 0, 0, 0.6); /* Keep background for info section */
-    backdrop-filter: blur(5px); /* Keep backdrop filter for info section */
-    padding: 10px 15px;
-    border-radius: 0.75rem;
-    text-align: left;
-    max-width: 280px; /* Limit width on larger screens */
-    white-space: nowrap; /* Prevent wrapping initially */
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#lofi-info-bottom .lofi-text {
-    font-size: 1rem;
-    color: #cbd5e0;
-    opacity: 0.9;
-}
-
-#lofi-info-bottom .lofi-credit {
-    font-size: 0.8rem;
-    color: #a0aec0;
-}
-
-#lofi-info-bottom .lofi-credit a {
-    color: #a0aec0;
-    text-decoration: underline;
-}
-
-/* Right-bottom group: Music Controls + Fullscreen Icon */
-.bottom-right-group {
-    display: flex;
-    align-items: flex-end; /* Align items to the bottom of this group */
-    gap: 20px; /* Space between music controls and fullscreen icon */
-}
-
-/* Music controls (now beside fullscreen) - REMOVED BACKGROUND */
-#lofi-controls-bottom {
+.btn-restart {
+    font-size: 1.5rem;
+    /* margin-left: 10px; REMOVED as gap handles spacing */
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    /* Ensure vertical alignment */
     display: flex;
     align-items: center;
-    gap: 15px; /* Space between individual control elements */
-    /* background-color: transparent; */ /* Removed background */
-    /* backdrop-filter: none; */ /* Removed backdrop filter */
-    padding: 0; /* Removed padding */
-    border-radius: 0; /* Removed border-radius */
+    justify-content: center;
+    height: 40px; /* Match approximate height of buttons for alignment */
+    width: 40px;
+    text-decoration: none;
+}
+
+.btn-restart:hover {
+    opacity: 1;
+}
+
+/* --- Bottom Controls (Music and Fullscreen) --- */
+.bottom-controls {
+    display: flex;
+    justify-content: space-between; /* Push left and right groups apart */
+    align-items: center;
+    padding: 15px 20px;
+    /* REMOVED background styles: */
+    /* background: rgba(0, 0, 0, 0.4); */
+    /* border-top: 1px solid rgba(255, 255, 255, 0.1); */
+    /* backdrop-filter: blur(5px); */
+    /* -webkit-backdrop-filter: blur(5px); */
+    /* border-radius: 0 0 15px 15px; */
+    width: 100%;
+}
+
+/* Container for Play/Pause button and Music Info (LEFT side) */
+.lofi-info-section {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between play/pause button and info */
+    flex-grow: 1; /* Allow it to take available space */
+    justify-content: flex-start; /* Align content to the left */
+    min-width: 0; /* Ensures content inside can shrink */
+    max-width: 60%; /* Limit width to give space to other controls */
+}
+
+/* Style for the Play/Pause button specifically within the info section */
+.play-pause-button-in-info {
+    font-size: 1.5rem; /* Make it a bit larger */
+    padding: 8px 10px; /* Adjust padding */
+    display: flex; /* Use flex for centering icon */
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; /* Make it perfectly round */
+    background: rgba(255, 255, 255, 0.1); /* Subtle background */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Border */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* Subtle shadow */
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    text-decoration: none;
+
+}
+
+.play-pause-button-in-info:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Music Info Text Styles */
+.lofi-info {
+    text-align: left; 
+    flex-shrink: 1; /* Allow info section to shrink */
+    min-width: 0; /* Important for text-overflow to work */
+    overflow: hidden; /* Hide overflow */
+}
+
+.lofi-text {
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden;    /* Hide overflowed text */
+    text-overflow: ellipsis; /* Show ellipsis (...) for overflowed text */
+    max-width: 100%; /* Important for text-overflow to work correctly */
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+#video-title {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.lofi-credit a {
+    color: inherit; /* Inherit text color */
+    text-decoration: underline;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+.lofi-credit a:hover {
+    opacity: 1;
+}
+
+/* Right-side controls group (Lofi Controls + Fullscreen) */
+.bottom-right-group {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Adjust gap between lofi controls and fullscreen */
+}
+
+/* Lofi Music Controls (Mute/Next/Volume) */
+.lofi-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .btn-lofi-control {
-    font-size: 1.5rem; /* Icon size */
+    font-size: 1.1rem; /* Adjust icon size */
+    opacity: 0.7;
     cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-    color: #fff; /* Ensure icon color is white */
+    transition: opacity 0.3s ease;
 }
 
 .btn-lofi-control:hover {
-    transform: scale(1.1);
-    opacity: 0.8;
+    opacity: 1;
 }
 
-/* Fullscreen control (now bottom-right) - REMOVED BACKGROUND */
-#fullscreen-control-bottom {
-    /* background-color: transparent; */ /* Removed background */
-    /* backdrop-filter: none; */ /* Removed backdrop filter */
-    padding: 0; /* Removed padding */
-    border-radius: 0; /* Removed border-radius */
+.lofi-volume-slider {
+    width: 80px; /* Adjust as needed */
+    height: 4px; /* Thin slider track */
+    -webkit-appearance: none; /* Remove default styling for WebKit browsers */
+    appearance: none; /* Standard property */
+    background: rgba(255, 255, 255, 0.3); /* Transparent white track */
+    border-radius: 2px;
+    outline: none; /* Remove blue outline on focus */
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+/* Slider Thumb (circle) styles */
+.lofi-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+.lofi-volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Fullscreen Controls */
+.fullscreen-controls {
+    display: flex;
+    align-items: center;
 }
 
 .btn-fullscreen {
-    font-size: 1.5rem; /* Icon size */
+    font-size: 1.2rem;
+    opacity: 0.7;
     cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-    color: #fff; /* Ensure icon color is white */
+    transition: opacity 0.3s ease;
 }
 
 .btn-fullscreen:hover {
-    transform: scale(1.1);
-    opacity: 0.8;
+    opacity: 1;
 }
 
-
-/* Responsive adjustments */
+/* --- Responsive Design (Mobile First adjustments) --- */
 @media (max-width: 768px) {
-    .timer {
-        font-size: 5rem;
+    .cover-container {
+        padding: 15px; /* Reduce padding on smaller screens */
     }
-    #control .btn {
-        font-size: 1rem;
-        padding: .5rem 1rem;
-    }
-    .btn-restart {
-        font-size: 1.8rem;
-        margin-left: 10px;
-    }
-    .lofi-volume-slider {
-        width: 80px;
-    }
+
     .pomodoro-modes {
         flex-direction: column; /* Stack buttons vertically on small screens */
         gap: 8px;
@@ -299,46 +325,67 @@ main.px-3 {
     .pomodoro-btn {
         width: 80%; /* Make buttons take more width */
         margin: 0 auto; /* Center buttons */
-    }
-    .background-toggle-container {
-        margin-top: 15px;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
 
-    /* Responsive for bottom controls */
+    .timer {
+        font-size: 5rem; /* Smaller timer font size */
+        margin-bottom: 20px;
+    }
+
+    /* Control buttons responsive adjustments */
+    #control {
+        gap: 8px; /* Reduce gap on small screens */
+    }
+    .control-btn {
+        min-width: 90px; /* Smaller min-width for control buttons */
+        font-size: 0.9rem;
+        padding: 0.5rem 0.8rem;
+    }
+    .btn-restart {
+        font-size: 1.2rem;
+        height: 36px; /* Adjust height for alignment */
+        width: 36px;
+    }
+
+    /* Bottom controls stack vertically */
     .bottom-controls {
-        padding: 10px;
-        flex-direction: column; /* Stack controls vertically on small screens */
-        align-items: center; /* Center horizontally */
-        gap: 15px; /* Space between stacked items */
-        position: relative; /* Change to relative if absolute causes issues with flex stacking */
-        width: auto; /* Let content define width if stacked */
+        flex-direction: column;
+        align-items: flex-start; /* Align content to the left */
+        gap: 10px;
+        padding: 10px 15px;
+    }
+    
+    /* Info section takes full width on small screens */
+    .lofi-info-section {
+        width: 100%; 
+        margin-bottom: 5px; 
+        max-width: 100%; /* Ensure it uses full available width */
     }
 
-    #lofi-info-bottom {
-        order: 1; /* Music info at the top of bottom section */
-        width: 90%; /* Take more width on small screens */
-        max-width: unset; /* Remove max-width constraint */
-        white-space: normal; /* Allow text to wrap */
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.4); /* Re-add a subtle background for readability if needed on mobile */
-        backdrop-filter: blur(3px); /* Subtle blur for mobile */
-    }
-
+    /* Right-side group takes full width and justifies content */
     .bottom-right-group {
-        order: 2; /* Right group below music info */
-        flex-direction: column; /* Stack controls and fullscreen vertically within this group */
-        align-items: center; /* Center horizontally within this group */
-        gap: 10px; /* Space between stacked music controls and fullscreen */
-        width: 100%; /* Take full width */
+        width: 100%;
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center;
+        flex-wrap: wrap; /* Allow wrapping if items are too wide */
     }
 
-    #lofi-controls-bottom {
-        width: 100%; /* Take full width within its group */
-        justify-content: center; /* Center individual controls */
-        flex-wrap: wrap; /* Allow controls to wrap if too many */
+    .lofi-controls {
+        flex-grow: 1; /* Allow lofi controls to expand */
+        justify-content: flex-start; /* Align to the left within its space */
+        gap: 8px; /* Slightly smaller gap */
+    }
+    .lofi-volume-slider {
+        width: 60px; /* Smaller slider on small screens */
+    }
+    .fullscreen-controls {
+        margin-left: auto; /* Push fullscreen to the right */
     }
 
-    #fullscreen-control-bottom {
-        margin-top: 0; /* No extra margin when stacked */
+    .btn-lofi-control, .btn-fullscreen {
+        font-size: 1rem; /* Slightly smaller icons */
     }
 }

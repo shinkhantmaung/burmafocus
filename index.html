@@ -35,7 +35,7 @@
     <div id="player"></div>
   </div>
 
-  <div class="cover-container d-flex w-100 h-100 p-5 mx-auto flex-column">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <nav class="mb-auto navbar justify-content-between">
     </nav>
 
@@ -44,9 +44,11 @@
       <div class="pomodoro-modes">
         <button id="modeWork"
           class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn active">Pomodoro</button>
-        <button id="modeShortBreak" class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">Short
+        <button id="modeShortBreak"
+          class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">Short
           Break</button>
-        <button id="modeLongBreak" class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">Long
+        <button id="modeLongBreak"
+          class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">Long
           Break</button>
       </div>
       <h1 class="timer" id="timer">
@@ -54,33 +56,29 @@
       </h1>
       <div class="lead" id="control">
         <button id="startbtn"
-          class="btn btn-lg btn-secondary btn-rounded fw-bold border-white bg-white text-dark">start</button>
-        <button id="pausebtn" class="btn btn-lg btn-secondary btn-rounded fw-bold border-white bg-white text-dark"
+          class="btn btn-lg btn-secondary btn-rounded fw-bold border-white control-btn">start</button>
+        <button id="pausebtn" class="btn btn-lg btn-secondary btn-rounded fw-bold border-white control-btn"
           style="display: none;">stop</button>
 
         <a id="resetbtn" class="text-white btn-restart">
           <i class="fa-solid fa-arrow-rotate-right"></i>
         </a>
       </div>
-
-      <!-- <div class="background-toggle-container">
-            <button id="toggleBgBtn" class="btn btn-sm btn-secondary btn-rounded fw-bold border-white bg-white text-dark">
-                Toggle Background
-            </button>
-        </div> -->
     </main>
 
     <div class="bottom-controls">
-      <div id="lofi-info-bottom" class="lofi-info">
-        <div id="video-title" class="lofi-text"></div>
-        <div id="video-credit" class="lofi-text lofi-credit"></div>
+      <div id="lofi-info-with-play" class="lofi-info-section">
+        <a id="playPauseBtn" class="text-white btn-lofi-control play-pause-button-in-info">
+          <i class="fas fa-play" id="playPauseIcon"></i>
+        </a>
+        <div id="lofi-info-bottom" class="lofi-info">
+          <div id="video-title" class="lofi-text"></div>
+          <div id="video-credit" class="lofi-text lofi-credit"></div>
+        </div>
       </div>
-
+      
       <div class="bottom-right-group">
         <div id="lofi-controls-bottom" class="lofi-controls">
-          <a id="playPauseBtn" class="text-white btn-lofi-control">
-            <i class="fas fa-play" id="playPauseIcon"></i>
-          </a>
           <a id="muteUnmuteBtn" class="text-white btn-lofi-control">
             <i class="fas fa-volume-up" id="muteUnmuteIcon"></i>
           </a>
@@ -100,10 +98,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <footer class="mt-auto text-white-50">
-        <p>developed by <a href="https://shinkhant.xyz" class="text-white" target="_blank">shinkhant</a> , images by <a href="https://shop.gridfiti.com/products/studio-ghibli-notion-covers" class="text-white" target="_blank">Gridfiti</a></p>
-      </footer> -->
   </div>
 
 </body>
