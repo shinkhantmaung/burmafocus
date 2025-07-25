@@ -1,70 +1,115 @@
 <!doctype html>
 <html lang="en" class="h-100">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>60mins Timer</title>
 
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/icon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/icon/favicon-16x16.png">
-    <link rel="manifest" href="assets/icon/site.webmanifest">
-    <link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    
-    <!-- Bootstrap core CSS -->
-    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pomodoro Timer</title>
 
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
-        
-    <!-- Custom styles for this template -->
-    <link href="assets/style.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icon/favicon-16x16.png">
+  <link rel="manifest" href="assets/icon/site.webmanifest">
+  <link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  </head>
-  <body class="d-flex h-100 text-center text-white bg-image">
-  
-    <div class="cover-container d-flex w-100 h-100 p-5 mx-auto flex-column">
-      <nav class="mb-auto navbar  justify-content-between">
-        <!-- <a class="navbar-brand">
-          <img src="assets/brand/logo.png" alt="" width="40%">
-        </a> -->
-      </nav>
+  <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
-      <main class="px-3">
-        <h1 class="timer" id="timer">
-            <span id="minutes">00</span>:<span id="seconds">00</span>
-        </h1>
-        <div class="lead" id="control">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 
-          <button id="startbtn" class="btn btn-lg btn-secondary btn-rounded fw-bold border-white bg-white text-dark">start</button> 
-          <button id="pausebtn" class="btn btn-lg btn-secondary btn-rounded fw-bold border-white bg-white text-dark" style="display: none;">stop</button> 
+  <link href="assets/style.css" rel="stylesheet">
 
-          <a id="resetbtn" class="text-white btn-restart" onclick="Clock.resetTimer()">
-            <i class="fa-solid fa-arrow-rotate-right"></i>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body class="d-flex h-100 text-center text-white bg-image">
+
+  <div id="background-container">
+    <img id="background-image" src="assets/img/bg1.jpg" alt="Lofi Background">
+    <div id="player"></div>
+  </div>
+
+  <div class="cover-container d-flex w-100 h-100 p-5 mx-auto flex-column">
+    <nav class="mb-auto navbar justify-content-between">
+    </nav>
+
+    <main class="px-3">
+
+      <div class="pomodoro-modes">
+        <button id="modeWork"
+          class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn active">Pomodoro</button>
+        <button id="modeShortBreak" class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">Short
+          Break</button>
+        <button id="modeLongBreak" class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">Long
+          Break</button>
+      </div>
+      <h1 class="timer" id="timer">
+        <span id="minutes">00</span>:<span id="seconds">00</span>
+      </h1>
+      <div class="lead" id="control">
+        <button id="startbtn"
+          class="btn btn-lg btn-secondary btn-rounded fw-bold border-white bg-white text-dark">start</button>
+        <button id="pausebtn" class="btn btn-lg btn-secondary btn-rounded fw-bold border-white bg-white text-dark"
+          style="display: none;">stop</button>
+
+        <a id="resetbtn" class="text-white btn-restart">
+          <i class="fa-solid fa-arrow-rotate-right"></i>
+        </a>
+      </div>
+
+      <!-- <div class="background-toggle-container">
+            <button id="toggleBgBtn" class="btn btn-sm btn-secondary btn-rounded fw-bold border-white bg-white text-dark">
+                Toggle Background
+            </button>
+        </div> -->
+    </main>
+
+    <div class="bottom-controls">
+      <div id="lofi-info-bottom" class="lofi-info">
+        <div id="video-title" class="lofi-text"></div>
+        <div id="video-credit" class="lofi-text lofi-credit"></div>
+      </div>
+
+      <div class="bottom-right-group">
+        <div id="lofi-controls-bottom" class="lofi-controls">
+          <a id="playPauseBtn" class="text-white btn-lofi-control">
+            <i class="fas fa-play" id="playPauseIcon"></i>
           </a>
-          <a id="openbtn" onclick="openFullscreen();" class="text-white btn-restart">
+          <a id="muteUnmuteBtn" class="text-white btn-lofi-control">
+            <i class="fas fa-volume-up" id="muteUnmuteIcon"></i>
+          </a>
+          <a id="nextVideoBtn" class="text-white btn-lofi-control">
+            <i class="fas fa-forward"></i>
+          </a>
+          <input type="range" id="volumeSlider" min="0" max="100" value="50" class="lofi-volume-slider">
+        </div>
+
+        <div id="fullscreen-control-bottom" class="fullscreen-controls">
+          <a id="openbtn" onclick="openFullscreen();" class="text-white btn-fullscreen">
             <i class="fa-solid fa-expand"></i>
           </a>
-          <a id="closebtn" onclick="closeFullscreen();" class="text-white btn-restart" style="display: none;">
-            <i class="fa-solid fa-expand"></i>
+          <a id="closebtn" onclick="closeFullscreen();" class="text-white btn-fullscreen" style="display: none;">
+            <i class="fa-solid fa-compress"></i>
           </a>
         </div>
-      </main>
-
-      <footer class="mt-auto text-white-50">
-        <p>developed by <a href="https://shinkhant.xyz" class="text-white" target="_blank">shinkhant</a> , images by <a href="https://shop.gridfiti.com/products/studio-ghibli-notion-covers" class="text-white" target="_blank">Gridfiti</a></p>
-      </footer>
+      </div>
     </div>
-    
-  </body>
-  <script src="js/jquery.js"></script>
-  <script src="js/fullscreen.js"></script>
-  <script src="js/app.js"></script>
+
+    <!-- <footer class="mt-auto text-white-50">
+        <p>developed by <a href="https://shinkhant.xyz" class="text-white" target="_blank">shinkhant</a> , images by <a href="https://shop.gridfiti.com/products/studio-ghibli-notion-covers" class="text-white" target="_blank">Gridfiti</a></p>
+      </footer> -->
+  </div>
+
+</body>
+<script src="js/jquery.js"></script>
+<script src="js/fullscreen.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="js/app.js"></script>
+
 </html>
