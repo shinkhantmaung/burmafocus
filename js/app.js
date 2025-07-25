@@ -188,9 +188,9 @@ function updateVideoInfo(videoId) {
     if (info) {
         videoTitleElement.textContent = info.title;
         if (info.creditUrl) {
-            creditElement.innerHTML = `Music by: <a href="${info.creditUrl}" target="_blank" rel="noopener noreferrer">${info.credit}</a>`;
+            creditElement.innerHTML = `<a href="${info.creditUrl}" target="_blank" rel="noopener noreferrer">${info.credit}</a>`;
         } else {
-            creditElement.textContent = `Music by: ${info.credit}`;
+            creditElement.textContent = `${info.credit}`;
         }
     } else {
         videoTitleElement.textContent = 'Lofi Radio'; 
