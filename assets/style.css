@@ -318,16 +318,25 @@ main {
         padding: 15px; /* Reduce padding on smaller screens */
     }
 
+    /* Pomodoro Mode Buttons - Responsive Adjustments */
     .pomodoro-modes {
-        flex-direction: column; /* Stack buttons vertically on small screens */
-        gap: 8px;
+        /* Remove ALL specific mobile styles for .pomodoro-modes */
+        /* flex-direction: row; */ /* REMOVED */
+        /* flex-wrap: wrap; */ /* REMOVED */
+        /* justify-content: center; */ /* This can stay if you want it centered */
+        /* gap: 8px; */ /* REMOVED - will revert to desktop gap */
         margin-bottom: 15px;
+        /* width: 100%; */ /* REMOVED */
+        /* Revert to desktop behavior: display: flex; justify-content: center; gap: 10px; */
     }
     .pomodoro-btn {
-        width: 80%; /* Make buttons take more width */
-        margin: 0 auto; /* Center buttons */
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
+        /* Remove ALL specific mobile styles for .pomodoro-btn */
+        /* flex: 1 1 auto; */ /* REMOVED */
+        /* max-width: 32%; */ /* REMOVED */
+        /* margin: 0; */ /* REMOVED */
+        padding: 0.5rem 0.8rem; /* Keep slightly reduced padding */
+        font-size: 0.85rem; /* Keep slightly smaller font size */
+        /* Revert to desktop behavior: width auto, padding 0.6rem 1.2rem */
     }
 
     .timer {
