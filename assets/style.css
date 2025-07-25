@@ -69,7 +69,7 @@ body {
     width: 100vw;
     height: 100vh;
     object-fit: cover; /* Cover the entire screen */
-    filter: brightness(0.5) blur(2px); /* Dim and blur for lofi effect */
+    filter: brightness(0.5) blur(1px); /* Dim and blur for lofi effect */
     transform: scale(1.1); /* Slightly scale to hide blur edges */
     transition: filter 0.5s ease-in-out; /* Smooth transition for blur/brightness */
 }
