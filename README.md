@@ -1,6 +1,6 @@
 # BurmaFocus - Pomodoro Timer & Lofi Study
 
-![BurmaFocus Screenshot](brave_screenshot_studywithme.io.jpg) BurmaFocus is a minimalist Pomodoro Timer combined with relaxing Lofi music, designed to enhance your productivity and focus. Inspired by the serene culture of Myanmar (Burma), it provides a peaceful environment for study or work.
+![BurmaFocus Screenshot](screenshot.png) BurmaFocus is a minimalist Pomodoro Timer combined with relaxing Lofi music, designed to enhance your productivity and focus. Inspired by the serene culture of Myanmar (Burma), it provides a peaceful environment for study or work.
 
 ## Features
 
