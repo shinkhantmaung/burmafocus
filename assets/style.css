@@ -19,7 +19,8 @@ body {
     height: 100%;
     overflow: hidden;
     z-index: -1; /* Place behind other content */
-    filter: brightness(0.7) blur(3px); /* Darken and blur the background image */
+    /* filter: brightness(0.7) blur(3px);  */
+    filter: blur(0.5px); 
     transition: filter 0.5s ease-in-out; /* Smooth transition for filter changes */
 }
 
