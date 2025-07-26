@@ -1,6 +1,6 @@
-const WORK_DURATION = 1;
-const SHORT_BREAK_DURATION = 1;
-const LONG_BREAK_DURATION = 1;
+const WORK_DURATION = 25;
+const SHORT_BREAK_DURATION = 5;
+const LONG_BREAK_DURATION = 15;
 const POMODOROS_BEFORE_LONG_BREAK = 4; // Long break ကို 4 ခုပြည့်ရင်ယူမယ်။
 
 var Clock = {
