@@ -7,12 +7,21 @@
   <title>Pomodoro Timer</title>
 
   <meta property="og:title" content="BurmaFocus - Pomodoro Timer & Lofi Music" />
-  <meta property="og:description" content="BurmaFocus: စိတ်အေးချမ်းစွာ အာရုံစိုက်နိုင်စေဖို့ Pomodoro Timer နဲ့ Lofi Music." />
-  <meta property="og:image" content="screenshot.png" /> <meta property="og:url" content="https://www.yourwebsite.com/" /> <meta property="og:type" content="website" />
-  <meta property="og:locale" content="my_MM" /> <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@yourtwitterhandle"> <meta name="twitter:creator" content="@yourtwitterhandle"> <meta name="twitter:title" content="BurmaFocus - Pomodoro Timer & Lofi Music">
-  <meta name="twitter:description" content="BurmaFocus: စိတ်အေးချမ်းစွာ အာရုံစိုက်နိုင်စေဖို့ Pomodoro Timer နဲ့ Lofi Music.">
-  <meta name="twitter:image" content="screenshot.png"> <meta name="description" content="BurmaFocus - စာကျက်ရန်နှင့် အလုပ်လုပ်ရန် Pomodoro Timer နှင့် Lofi Music ပါဝင်သော web app တစ်ခု။">
+  <meta property="og:description"
+    content="BurmaFocus: စိတ်အေးချမ်းစွာ အာရုံစိုက်နိုင်စေဖို့ Pomodoro Timer နဲ့ Lofi Music." />
+  <meta property="og:image" content="screenshot.png" />
+  <meta property="og:url" content="https://www.yourwebsite.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="my_MM" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@yourtwitterhandle">
+  <meta name="twitter:creator" content="@yourtwitterhandle">
+  <meta name="twitter:title" content="BurmaFocus - Pomodoro Timer & Lofi Music">
+  <meta name="twitter:description"
+    content="BurmaFocus: စိတ်အေးချမ်းစွာ အာရုံစိုက်နိုင်စေဖို့ Pomodoro Timer နဲ့ Lofi Music.">
+  <meta name="twitter:image" content="screenshot.png">
+  <meta name="description"
+    content="BurmaFocus - စာကျက်ရန်နှင့် အလုပ်လုပ်ရန် Pomodoro Timer နှင့် Lofi Music ပါဝင်သော web app တစ်ခု။">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icon/apple-touch-icon.png">
@@ -53,11 +62,9 @@
       <div class="pomodoro-modes">
         <button id="modeWork"
           class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn active">pomodoro</button>
-        <button id="modeShortBreak"
-          class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">short
+        <button id="modeShortBreak" class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">short
           break</button>
-        <button id="modeLongBreak"
-          class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">long
+        <button id="modeLongBreak" class="btn btn-sm btn-secondary btn-rounded fw-bold border-white pomodoro-btn">long
           break</button>
       </div>
       <h1 class="timer" id="timer">
@@ -72,6 +79,8 @@
         <a id="resetbtn" class="text-white btn-restart">
           <i class="fa-solid fa-arrow-rotate-right"></i>
         </a>
+        <a id="settings-btn" class="text-white btn-settings"> <i class="fa-solid fa-gear"></i>
+        </a>
       </div>
     </main>
 
@@ -85,7 +94,7 @@
           <div id="video-credit" class="lofi-text lofi-credit"></div>
         </div>
       </div>
-      
+
       <div class="bottom-right-group">
         <div id="lofi-controls-bottom" class="lofi-controls">
           <a id="muteUnmuteBtn" class="text-white btn-lofi-control">
@@ -105,6 +114,43 @@
             <i class="fa-solid fa-compress"></i>
           </a>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button id="close-settings-modal" class="close-button">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-section">
+          <h3>Themes</h3>
+          <div class="theme-options">
+            <label>
+              <input type="radio" name="theme" value="default" checked>
+              Default
+            </label>
+            <label>
+              <input type="radio" name="theme" value="ghibli">
+              Studio Ghibli
+            </label>
+            <label>
+              <input type="radio" name="theme" value="myanmar">
+              Myanmar (Burma)
+            </label>
+            <label>
+              <input type="radio" name="theme" value="blank">
+              Simple Blank (Dark)
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="reset-all-settings" class="btn btn-sm btn-secondary btn-rounded fw-bold border-white">Reset
+          all</button>
+        <button id="save-settings" class="btn btn-sm btn-primary btn-rounded fw-bold">Save changes</button>
       </div>
     </div>
   </div>

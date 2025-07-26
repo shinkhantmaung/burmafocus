@@ -20,7 +20,7 @@ body {
     overflow: hidden;
     z-index: -1; /* Place behind other content */
     /* filter: brightness(0.7) blur(3px);  */
-    filter: blur(0.5px); 
+    filter: blur(1px); 
     transition: filter 0.5s ease-in-out; /* Smooth transition for filter changes */
 }
 
@@ -110,7 +110,8 @@ main {
     font-size: 8rem; /* Large font size for timer */
     line-height: 1;
     margin-bottom: 30px;
-    font-weight: bold;}
+    font-weight: bold;
+}
 
 /* Control Buttons (Start/Stop/Reset) - NEW styles for start/pause */
 #control {
@@ -139,22 +140,21 @@ main {
     border-color: #262626; /* Keep border white on hover */
 }
 
-.btn-restart {
+.btn-restart, .btn-settings { /* Apply restart styles to settings button too */
     font-size: 1.5rem;
-    /* margin-left: 10px; REMOVED as gap handles spacing */
     cursor: pointer;
     opacity: 0.7;
     transition: opacity 0.3s ease;
-    /* Ensure vertical alignment */
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40px; /* Match approximate height of buttons for alignment */
     width: 40px;
     text-decoration: none;
+    color: inherit; /* Inherit text color from parent */
 }
 
-.btn-restart:hover {
+.btn-restart:hover, .btn-settings:hover {
     opacity: 1;
 }
 
@@ -208,7 +208,7 @@ main {
 
 /* Music Info Text Styles */
 .lofi-info {
-    text-align: left; 
+    text-align: left;
     flex-shrink: 1; /* Allow info section to shrink */
     min-width: 0; /* Important for text-overflow to work */
     overflow: hidden; /* Hide overflow */
@@ -313,6 +313,283 @@ main {
     opacity: 1;
 }
 
+/* --- REVISED: Settings Modal Styles (Simple, Modern, Clean & Consistent - Modal Popup Only) --- */
+/*
+   This revision focuses ONLY on the visual styling of the existing modal popup UI.
+   It aims for a clean, simple, and modern look with precise alignment,
+   consistent button styles matching the main page, and green accents.
+   No changes to HTML or JavaScript are intended or required by this CSS.
+*/
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: #262626; /* Match main body background for consistency */
+    border-radius: 8px; /* Slightly less rounded for a modern edge */
+    padding: 35px 45px; /* Generous padding for clean layout */
+    width: 90%;
+    max-width: 550px; /* Optimized width */
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7); /* Subtle, sharp shadow */
+    color: #f0f0f0; /* Light text color */
+    transform: translateY(-15px); /* Gentle slide-in effect */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border: none; /* No visible border for a flatter, simpler look */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    max-height: 90vh; /* Prevent modal from exceeding viewport height */
+    overflow-y: auto; /* Allow content to scroll if it overflows */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px; /* Space below header */
+    padding-bottom: 20px; /* Padding for the separator */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Thin, subtle separator */
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 2.5rem; /* Prominent title */
+    font-weight: 700;
+    color: #ffffff; /* Pure white for title */
+    text-align: left; /* Explicitly left-aligned */
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 3rem; /* Large 'x' for easy clicking */
+    color: #a0a0a0; /* Soft grey for the 'x' */
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s ease; /* Simpler transition */
+}
+
+.close-button:hover {
+    color: #ffffff; /* White on hover */
+}
+
+.modal-body {
+    flex-grow: 1; /* Allows body to expand and push footer down */
+}
+
+.settings-section {
+    margin-bottom: 35px; /* Generous spacing between sections */
+    padding-bottom: 25px; /* Padding for the separator */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Very subtle separator */
+}
+
+.settings-section:last-child {
+    border-bottom: none; /* No border for the last section */
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.settings-section h3 {
+    font-size: 1.7rem; /* Section heading */
+    margin-top: 0;
+    margin-bottom: 20px; /* Space below heading */
+    color: #ffffff; /* White color for headings */
+    font-weight: 600;
+    text-align: left; /* Explicitly left-aligned */
+}
+
+/* Theme Options - Clean Grid Layout */
+.theme-options {
+    display: grid;
+    /* Responsive grid: 2 columns on larger screens, adjust based on content */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px 30px; /* Generous gaps for clear separation */
+    align-items: center;
+    justify-content: start; /* Align items to the start of the grid cell */
+}
+
+.theme-options label {
+    display: flex; /* Use flex for precise alignment of radio and text */
+    align-items: center;
+    gap: 15px; /* Space between radio and text */
+    cursor: pointer;
+    font-size: 1.05rem; /* Readable font size */
+    color: #e0e0e0; /* Softer white text */
+    transition: color 0.2s ease;
+    white-space: nowrap; /* Prevent text wrapping within a label */
+}
+
+.theme-options label:hover {
+    color: #ffffff; /* White text on hover */
+}
+
+.theme-options input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 24px; /* Standard radio button size */
+    height: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.4); /* Match pomodoro-btn border style for consistency */
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.theme-options input[type="radio"]:checked {
+    border-color: #4CAF50; /* Green border when checked */
+    background-color: #4CAF50; /* Green background when checked */
+}
+
+.theme-options input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    width: 12px; /* Inner dot */
+    height: 12px;
+    background: #262626; /* Dark dot to contrast with green (modal's bg) */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Toggle Switch (for notifications) - Modern Look with Green */
+.notification-toggle-group {
+    display: flex;
+    align-items: center; /* Crucial for vertical alignment of toggle and label */
+    gap: 20px; /* Space between toggle and label */
+    padding: 5px 0;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 55px; /* Standard width */
+    height: 30px; /* Standard height */
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider { /* The track */
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.3); /* Match general border transparency */
+    transition: .4s;
+    border-radius: 30px; /* Fully rounded track */
+}
+
+.slider:before { /* The thumb/handle */
+    position: absolute;
+    content: "";
+    height: 22px; /* Size of the thumb */
+    width: 22px;
+    left: 4px; /* Offset from left */
+    bottom: 4px;
+    background-color: #f0f0f0; /* Off-white thumb */
+    border-radius: 50%; /* Round thumb */
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #4CAF50; /* Green when on */
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #4CAF50; /* Green shadow on focus */
+}
+
+input:checked + .slider:before {
+    transform: translateX(25px); /* Move thumb to the right */
+    background-color: #ffffff; /* White thumb when on (contrasts with green) */
+}
+
+.toggle-label {
+    font-size: 1.05rem; /* Readable font size */
+    color: #e0e0e0; /* Soft white text */
+    line-height: 1.4; /* Better readability */
+    flex-grow: 1; /* Allow label to take remaining space */
+    text-align: left; /* Ensure label text is left-aligned */
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 15px; /* Space between buttons, matching main page */
+    padding-top: 30px; /* Space above footer */
+    border-top: 1px solid rgba(255, 255, 255, 0.08); /* Separator */
+    margin-top: 20px; /* Space from content above */
+}
+
+/* Modal Buttons (Matching main page buttons for consistency) */
+.modal-footer .btn {
+    padding: 0.6rem 1.2rem; /* Match pomodoro-btn padding */
+    font-size: 1rem; /* Match pomodoro-btn font size */
+    border-radius: 2rem; /* Match pomodoro-btn border-radius */
+    font-weight: bold; /* Match active pomodoro-btn font-weight */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    min-width: 120px; /* Match control-btn min-width */
+    text-align: center;
+    box-shadow: none; /* Keep flat for modern/simple */
+}
+
+.modal-footer .btn-secondary {
+    background-color: transparent; /* Match pomodoro-btn default */
+    color: #f0f0f0; /* Match pomodoro-btn default */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Match pomodoro-btn default */
+}
+.modal-footer .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Match pomodoro-btn hover */
+    border-color: rgba(255, 255, 255, 0.6); /* Match pomodoro-btn hover */
+    color: #f0f0f0;
+}
+
+.modal-footer .btn-primary {
+    background-color: #fff; /* Match pomodoro-btn active */
+    color: #262626; /* Match pomodoro-btn active */
+    border: 1px solid #fff; /* Match pomodoro-btn active */
+}
+.modal-footer .btn-primary:hover {
+    background-color: #e0e0e0; /* Slightly darker white on hover */
+    border-color: #e0e0e0;
+    color: #262626;
+}
+
 /* --- Responsive Design (Mobile First adjustments) --- */
 @media (max-width: 768px) {
     .cover-container {
@@ -367,19 +644,19 @@ main {
         gap: 10px;
         padding: 10px 15px;
     }
-    
+
     /* Info section takes full width on small screens */
     .lofi-info-section {
-        width: 100%; 
-        margin-bottom: 5px; 
+        width: 100%;
+        margin-bottom: 5px;
         max-width: 100%; /* Ensure it uses full available width */
     }
 
     /* Right-side group takes full width and justifies content */
     .bottom-right-group {
         width: 100%;
-        display: flex; 
-        justify-content: space-between; 
+        display: flex;
+        justify-content: space-between;
         align-items: center;
         flex-wrap: wrap; /* Allow wrapping if items are too wide */
     }
@@ -398,5 +675,76 @@ main {
 
     .btn-lofi-control, .btn-fullscreen {
         font-size: 1rem; /* Slightly smaller icons */
+    }
+
+    /* REVISED: Settings Modal Media Query Styles */
+    .modal-content {
+        padding: 25px 30px; /* Adjusted padding for smaller screens */
+        max-width: 95%; /* Adjust width */
+        max-height: 95vh; /* Adjust height */
+    }
+    .modal-header {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+    }
+    .modal-header h2 {
+        font-size: 2rem; /* Smaller title on mobile */
+    }
+    .close-button {
+        font-size: 2.5rem; /* Smaller 'x' on mobile */
+    }
+    .settings-section {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+    }
+    .settings-section h3 {
+        font-size: 1.5rem; /* Smaller section heading on mobile */
+    }
+    .theme-options {
+        grid-template-columns: 1fr; /* Stack themes vertically on small screens */
+        gap: 15px; /* Adjusted gap */
+    }
+    .theme-options label {
+        font-size: 1rem; /* Slightly smaller text */
+    }
+    .theme-options input[type="radio"] {
+        width: 22px; /* Adjust size */
+        height: 22px;
+    }
+    .theme-options input[type="radio"]:checked::before {
+        width: 10px;
+        height: 10px;
+    }
+
+    .notification-toggle-group {
+        gap: 15px;
+    }
+    .toggle-switch {
+        width: 50px; /* Adjust size */
+        height: 28px;
+    }
+    .slider:before {
+        height: 20px; /* Adjust thumb size */
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+    }
+    input:checked + .slider:before {
+        transform: translateX(22px); /* Adjust thumb travel */
+    }
+    .toggle-label {
+        font-size: 1rem;
+    }
+
+    .modal-footer {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 15px; /* Adjusted gap */
+        padding-top: 25px;
+    }
+    .modal-footer .btn {
+        width: 100%; /* Full width buttons */
+        font-size: 1rem; /* Slightly smaller font */
+        padding: 0.8rem 1.6rem;
+        min-width: unset; /* Remove min-width constraint */
     }
 }
