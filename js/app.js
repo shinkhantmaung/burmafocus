@@ -1,13 +1,13 @@
-const WORK_DURATION = 25;
-const SHORT_BREAK_DURATION = 5;
-const LONG_BREAK_DURATION = 15;
-const POMODOROS_BEFORE_LONG_BREAK = 4;
+const WORK_DURATION = 1;
+const SHORT_BREAK_DURATION = 1;
+const LONG_BREAK_DURATION = 1;
+const POMODOROS_BEFORE_LONG_BREAK = 4; // Long break ကို 4 ခုပြည့်ရင်ယူမယ်။
 
 var Clock = {
     totalSeconds: WORK_DURATION * 60,
     interval: null,
     currentMode: 'work',
-    pomodoroCount: 0,
+    pomodoroCount: 0, // Current completed pomodoro count
 
     lofiPlayer: null,
     isLofiPlaying: false,
@@ -16,6 +16,40 @@ var Clock = {
     
     allVideosData: [],
     videoIds: [],
+
+    // Function to request notification permission
+    requestNotificationPermission: function() {
+        if (!("Notification" in window)) {
+            console.warn("This browser does not support desktop notification");
+        } else if (Notification.permission === "granted") {
+            console.log("Notification permission already granted.");
+            // Permission already granted, no need to ask again
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(function (permission) {
+                if (permission === "granted") {
+                    console.log("Notification permission granted!");
+                } else {
+                    console.warn("Notification permission denied.");
+                }
+            });
+        }
+    },
+
+    // Function to show a notification
+    showNotification: function(title, body) {
+        if (Notification.permission === "granted") {
+            const options = {
+                body: body,
+                icon: 'assets/icon/favicon-32x32.png',
+            };
+            new Notification(title, options);
+        } else if (Notification.permission === "denied") {
+            console.warn("Notification permission was denied. Cannot show notification.");
+        } else {
+            console.info("Notification permission not yet granted or denied. Requesting...");
+            this.requestNotificationPermission(); 
+        }
+    },
 
     startTimer: function () {
         if (!this.interval && this.totalSeconds > 0) {
@@ -40,12 +74,7 @@ var Clock = {
                 }
             }, 1000);
 
-            // Auto-play lofi music when timer starts if not already playing
-            // IMPORTANT: Browsers block autoplay with sound unless user interacted.
-            // We'll try to play, but it might be muted by browser or require a click.
             if (this.lofiPlayer && !this.isLofiPlaying && this.isPlayerReady) {
-                // If music was explicitly paused (e.g., by user) and timer starts, play it.
-                // If it was paused due to browser autoplay policy, this will attempt to play.
                 this.lofiPlayer.playVideo();
             }
         }
@@ -61,7 +90,7 @@ var Clock = {
             this.lofiPlayer.pauseVideo();
         }
     },
-    //Reset Timer
+    
     resetTimer: function () {
         if (this.lofiPlayer && this.isLofiPlaying) {
             this.lofiPlayer.pauseVideo();
@@ -76,38 +105,63 @@ var Clock = {
         
         bellSound.play().catch(e => console.error("Error playing bell sound:", e)); 
 
+        let notificationTitle = "";
+        let notificationBody = "";
+        
+        // --- Determine Notification Content and Next Mode ---
+        if (this.currentMode === 'work') {
+            this.pomodoroCount++; // Increment count for the just-completed work session
+            
+            notificationTitle = "အလုပ်ချိန် ပြီးပါပြီ!";
+            
+            // Check if it's time for a long break or short break
+            if (this.pomodoroCount >= POMODOROS_BEFORE_LONG_BREAK) {
+                // It's time for a long break
+                notificationBody = `အကြာကြီး နားရအောင်! 🥳 (${this.pomodoroCount}/${POMODOROS_BEFORE_LONG_BREAK})`;
+                this.showNotification(notificationTitle, notificationBody); 
+                this.pomodoroCount = 0; // Reset pomodoro count after a long break cycle
+                this.switchMode('longBreak');
+            } else {
+                // It's time for a short break
+                notificationBody = `ခဏနားရအောင်! 😉 (${this.pomodoroCount}/${POMODOROS_BEFORE_LONG_BREAK})`;
+                this.showNotification(notificationTitle, notificationBody);
+                this.switchMode('shortBreak');
+            }
+        } else if (this.currentMode === 'shortBreak') {
+            notificationTitle = "နားချိန် ပြီးပြီနော်!";
+            notificationBody = "ပြန်စဖို့ အချိန်ရောက်ပြီ။ စကြမလား? 💪";
+            this.showNotification(notificationTitle, notificationBody); 
+            this.switchMode('work'); 
+        } else if (this.currentMode === 'longBreak') {
+            notificationTitle = "နားချိန် ပြီးပြီနော်!";
+            notificationBody = "အလုပ်တွေ ဆက်လုပ်ဖို့ အချိန်ရောက်ပြီ! 🚀";
+            this.showNotification(notificationTitle, notificationBody); 
+            this.switchMode('work'); 
+        }
+        // --- End Notification Content and Next Mode Logic ---
+
+        // Mute lofi music temporarily during bell sound
         if (this.lofiPlayer && this.isLofiPlaying) {
             const originalVolume = this.lofiPlayer.getVolume();
             this.lofiPlayer.setVolume(0);
             this.lofiPlayer.mute();
 
-            const bellDurationMs = (bellSound.duration && bellSound.duration > 0) ? bellSound.duration * 1000 + 500 : 2500;
+            const bellDurationMs = (bellSound.duration && bellSound.duration > 0) ? bellSound.duration * 1000 + 500 : 2500; // Get actual bell duration or default 2.5s
 
             setTimeout(() => {
                 this.lofiPlayer.unMute();
                 this.lofiPlayer.setVolume(originalVolume);
-                updateMuteUnmuteIcon(false);
+                updateMuteUnmuteIcon(false); // Update UI for mute status
             }, bellDurationMs);
         }
 
-        if (this.currentMode === 'work') {
-            this.pomodoroCount++;
-            if (this.pomodoroCount >= POMODOROS_BEFORE_LONG_BREAK) {
-                this.pomodoroCount = 0;
-                this.switchMode('longBreak');
-            } else {
-                this.switchMode('shortBreak');
-            }
-        } else {
-            this.switchMode('work');
-        }
+        // Start the timer for the *newly switched* mode
         this.startTimer();
     },
-    // Switch between Pomodoro modes
 
     switchMode: function (mode) {
         this.currentMode = mode;
-        this.pauseTimer();
+        this.pauseTimer(); // Stop current timer
 
         let duration;
         document.querySelectorAll('.pomodoro-btn').forEach(btn => btn.classList.remove('active'));
@@ -147,11 +201,11 @@ var Clock = {
         this.updateDisplay();
     }
 };
-// --- Audio for notifications ---
-// IMPORTANT: Ensure 'assets/sounds/bell.mp3' file exists!
-const bellSound = new Audio('assets/sounds/bell.mp3'); 
-// --- Background Image Changer ---
 
+// --- Audio for notifications ---
+const bellSound = new Audio('assets/sounds/bell.mp3'); 
+
+// --- Background Image Changer ---
 const backgroundImages = [
     "assets/img/bg1.jpg", "assets/img/bg2.jpg", "assets/img/bg3.jpg", "assets/img/bg4.jpg",
     "assets/img/bg5.jpg", "assets/img/bg6.jpg", "assets/img/bg7.jpg", "assets/img/bg8.jpg",
@@ -179,7 +233,6 @@ function changeBackgroundImage(imageUrl = getRandomBackgroundImage()) {
 // --- YouTube Lofi Integration ---
 var player; 
 
-// Function to update video credit and title from loaded data
 function updateVideoInfo(videoId) {
     const info = Clock.allVideosData.find(video => video.id === videoId);
     const videoTitleElement = document.getElementById('video-title');
@@ -199,8 +252,6 @@ function updateVideoInfo(videoId) {
     }
 }
 
-// This function creates an <iframe> (and YouTube player)
-// after the API code downloads.
 function onYouTubeIframeAPIReady() {
     if (Clock.videoIds.length === 0) {
         console.warn("videoIds not loaded yet. Attempting to load...");
@@ -230,7 +281,6 @@ function onYouTubeIframeAPIReady() {
     Clock.lofiPlayer = player;
 }
 
-// The API will call this function when the video player is ready.
 function onPlayerReady(event) {
     Clock.isPlayerReady = true;
 
@@ -302,7 +352,6 @@ function updateMuteUnmuteIcon(isMuted) {
     }
 }
 
-// Event Listeners for Lofi Controls
 document.getElementById('playPauseBtn').addEventListener('click', function() {
     if (Clock.lofiPlayer && Clock.isPlayerReady) {
         if (Clock.lofiPlayer.getPlayerState() === YT.PlayerState.PLAYING || Clock.lofiPlayer.getPlayerState() === YT.PlayerState.BUFFERING) {
@@ -336,13 +385,13 @@ document.getElementById('volumeSlider').addEventListener('input', function() {
 document.getElementById('muteUnmuteBtn').addEventListener('click', function() {
     if (Clock.lofiPlayer && Clock.isPlayerReady) {
         if (Clock.lofiPlayer.isMuted()) {
-            Clock.lofiPlayer.unMute();
-            updateMuteUnmuteIcon(false);
-            document.getElementById('volumeSlider').value = Clock.lofiPlayer.getVolume();
-        } else {
             Clock.lofiPlayer.mute();
             updateMuteUnmuteIcon(true);
             document.getElementById('volumeSlider').value = 0;
+        } else {
+            Clock.lofiPlayer.unMute();
+            updateMuteUnmuteIcon(false);
+            document.getElementById('volumeSlider').value = Clock.lofiPlayer.getVolume();
         }
     }
 });
@@ -376,7 +425,6 @@ document.getElementById('modeLongBreak').addEventListener('click', function() {
 const toggleBgBtn = document.getElementById('toggleBgBtn');
 const backgroundContainer = document.getElementById('background-container');
 
-// Only add event listener if the toggle button exists
 if (toggleBgBtn) {
     toggleBgBtn.addEventListener('click', function() {
         Clock.isBackgroundVisible = !Clock.isBackgroundVisible;
@@ -387,7 +435,6 @@ if (toggleBgBtn) {
         }
     });
 }
-
 
 async function loadVideoDataAndInitializePlayer() {
     try {
@@ -417,4 +464,7 @@ $(document).ready(function(){
     changeBackgroundImage();
     
     loadVideoDataAndInitializePlayer();
+
+    // Request notification permission when the page loads
+    Clock.requestNotificationPermission(); 
 });
