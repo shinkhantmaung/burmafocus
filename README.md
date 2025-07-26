@@ -25,7 +25,7 @@
 ## Local Setup
 
 ```bash
-git clone [https://github.com/your-username/burmafocus.git](https://github.com/your-username/burmafocus.git) # Replace with your actual repo URL
+git clone [https://github.com/shinkhantmaung/burmafocus.git](https://github.com/shinkhantmaung/burmafocus.git) # Replace with your actual repo URL
 cd burmafocus
 # Open index.html in your browser or with a Live Server.
 ```
