@@ -555,6 +555,35 @@ input:checked + .slider:before {
     margin-top: 20px; /* Space from content above */
 }
 
+.modal-info-text {
+    font-size: 0.85rem; /* Smaller font for disclaimers/info */
+    color: #b0b0b0; /* Softer grey for less emphasis */
+    line-height: 1.5;
+    text-align: left; /* Ensure left alignment */
+    width: 100%; /* Take full width */
+}
+
+.modal-info-text p {
+    margin-bottom: 0.8em; /* Space between paragraphs */
+    margin-top: 0;
+}
+
+.modal-info-text p:last-child {
+    margin-bottom: 0;
+}
+
+.modal-info-text a {
+    color: #4CAF50; /* Green links for interaction */
+    text-decoration: none; /* No underline by default */
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.modal-info-text a:hover {
+    color: #6CD970; /* Lighter green on hover */
+    text-decoration: underline; /* Underline on hover */
+}
+
+
 /* Modal Buttons (Matching main page buttons for consistency) */
 .modal-footer .btn {
     padding: 0.6rem 1.2rem; /* Match pomodoro-btn padding */
